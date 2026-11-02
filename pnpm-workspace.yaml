@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Fail `pnpm install` on a Node version outside package.json "engines" (>=24).
+engineStrict: true
