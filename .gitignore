@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+
+# build output
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel/
+
+# env files (keep .env.example tracked)
+.env
+.env*.local
+!.env.example
+
+# OS / logs
+.DS_Store
+*.pem
+npm-debug.log*
+.pnpm-debug.log*

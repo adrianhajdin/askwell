@@ -1,0 +1,12 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Fail `pnpm install` on a Node version outside package.json "engines".
+engineStrict: true
+
+# Install scripts are off by default; these packages work without theirs.
+allowBuilds:
+  esbuild: false
+  sharp: false
+  unrs-resolver: false
