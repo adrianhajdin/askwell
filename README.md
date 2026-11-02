@@ -40,5 +40,8 @@ pnpm dev               # http://localhost:3000
 | Framework | Next.js |
 | Install Command | default (`pnpm install`, run at the repo root) |
 | Build Command | default (`next build`) |
-| Node.js | 24.x (from `engines`) |
+| Node.js | 24.x (from `engines`; it overrides the dashboard's Node.js Version) |
+| pnpm | 12.16.1, picked up from `packageManager`. `ENABLE_EXPERIMENTAL_COREPACK` is not needed. |
 | Production | Automatic promotion off |
+
+Previews are protected. Send `x-vercel-protection-bypass: $VERCEL_AUTOMATION_BYPASS_SECRET` with every request.
