@@ -1,1 +1,133 @@
 @import "tailwindcss";
+
+/*
+ * Design tokens (docs/project.md §13).
+ *
+ * One set of tokens, two surfaces:
+ *   <div data-surface="dark">  → landing (black, white glass)
+ *   <div data-surface="light"> → dashboard (light grey, white glass)
+ * :root defaults to light. Components use only the semantic tokens below
+ * (bg-surface, text-fg, bg-glass, border-line, rounded-panel, shadow-glass,
+ * backdrop-blur-glass…), so the same markup works on both surfaces.
+ *
+ * Never hardcode a hex, rgb or blur value in a component. Add a token here.
+ */
+
+/* Base palette: black, white and a small grey scale. Tailwind's default
+   colors are removed so only these exist. */
+@theme static {
+  --color-*: initial;
+
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-grey-50: #fafafa;
+  --color-grey-100: #f5f5f5;
+  --color-grey-200: #e5e5e5;
+  --color-grey-300: #d4d4d4;
+  --color-grey-400: #a3a3a3;
+  --color-grey-500: #737373;
+  --color-grey-600: #525252;
+  --color-grey-700: #404040;
+  --color-grey-800: #262626;
+  --color-grey-900: #171717;
+  --color-grey-950: #0a0a0a;
+
+  /* Radius */
+  --radius-control: 0.75rem;
+  --radius-panel: 1.25rem;
+
+  /* Blur levels for glass panels and background glows */
+  --blur-glass-sm: 8px;
+  --blur-glass: 16px;
+  --blur-glass-lg: 32px;
+  --blur-glow: 80px;
+}
+
+/* Semantic tokens. `inline` makes utilities read the per-surface variable
+   directly, so a nested data-surface wrapper flips them. */
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-surface: var(--surface-bg);
+  --color-fg: var(--surface-fg);
+  --color-fg-muted: var(--surface-fg-muted);
+  --color-fg-subtle: var(--surface-fg-subtle);
+  --color-glass: var(--surface-glass);
+  --color-glass-strong: var(--surface-glass-strong);
+  --color-line: var(--surface-line);
+  --color-line-strong: var(--surface-line-strong);
+  --color-primary: var(--surface-primary);
+  --color-primary-fg: var(--surface-primary-fg);
+  --color-hover: var(--surface-hover);
+  --color-skeleton: var(--surface-skeleton);
+  --color-focus: var(--surface-focus);
+  --color-glow: var(--surface-glow);
+
+  --shadow-glass: var(--surface-shadow-glass);
+  --shadow-glass-lg: var(--surface-shadow-glass-lg);
+}
+
+/* Light surface (dashboard). Also the default. */
+:root,
+[data-surface="light"] {
+  color-scheme: light;
+  --surface-bg: var(--color-grey-100);
+  --surface-fg: var(--color-grey-950);
+  --surface-fg-muted: var(--color-grey-600);
+  --surface-fg-subtle: var(--color-grey-500);
+  --surface-glass: rgb(255 255 255 / 0.6);
+  --surface-glass-strong: rgb(255 255 255 / 0.85);
+  --surface-line: rgb(0 0 0 / 0.08);
+  --surface-line-strong: rgb(0 0 0 / 0.16);
+  --surface-primary: var(--color-black);
+  --surface-primary-fg: var(--color-white);
+  --surface-hover: rgb(0 0 0 / 0.05);
+  --surface-skeleton: rgb(0 0 0 / 0.07);
+  --surface-focus: rgb(0 0 0 / 0.5);
+  --surface-glow: rgb(0 0 0 / 0.07);
+  --surface-shadow-glass:
+    0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06),
+    inset 0 1px 0 rgb(255 255 255 / 0.7);
+  --surface-shadow-glass-lg:
+    0 2px 4px rgb(0 0 0 / 0.04), 0 24px 48px rgb(0 0 0 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.7);
+}
+
+/* Dark surface (landing). */
+[data-surface="dark"] {
+  color-scheme: dark;
+  --surface-bg: var(--color-black);
+  --surface-fg: var(--color-white);
+  --surface-fg-muted: var(--color-grey-400);
+  --surface-fg-subtle: var(--color-grey-500);
+  --surface-glass: rgb(255 255 255 / 0.04);
+  --surface-glass-strong: rgb(255 255 255 / 0.08);
+  --surface-line: rgb(255 255 255 / 0.1);
+  --surface-line-strong: rgb(255 255 255 / 0.2);
+  --surface-primary: var(--color-white);
+  --surface-primary-fg: var(--color-black);
+  --surface-hover: rgb(255 255 255 / 0.08);
+  --surface-skeleton: rgb(255 255 255 / 0.08);
+  --surface-focus: rgb(255 255 255 / 0.6);
+  --surface-glow: rgb(255 255 255 / 0.1);
+  --surface-shadow-glass:
+    0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px rgb(0 0 0 / 0.5),
+    inset 0 1px 0 rgb(255 255 255 / 0.06);
+  --surface-shadow-glass-lg:
+    0 2px 4px rgb(0 0 0 / 0.4), 0 32px 64px rgb(0 0 0 / 0.6),
+    inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+/* Style variant for anything inside a dark surface, e.g. `surface-dark:…`. */
+@custom-variant surface-dark (&:where([data-surface="dark"], [data-surface="dark"] *));
+
+@layer base {
+  body {
+    @apply bg-surface text-fg font-sans antialiased;
+  }
+
+  [data-surface] {
+    @apply bg-surface text-fg;
+  }
+}
